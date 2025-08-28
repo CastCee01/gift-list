@@ -91,4 +91,4 @@ All design and final code were written by me; AI acted as a productivity amplifi
 
 Links
 - 🌐 Live demo: https://gift-list-alpha.vercel.app/
-- 💻 Source code: https://github.com/CastCee01/gift-listS
+- 💻 Source code: https://github.com/CastCee01/gift-list
