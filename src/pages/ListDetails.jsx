@@ -17,7 +17,7 @@ export default function ListDetails() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button variant="secondary">Copy share link</Button>
 
-          <Link to="/lists/new">
+          <Link to="/lists/test/gifts/new">
             <Button>Add gift</Button>
           </Link>
         </div>
@@ -29,7 +29,7 @@ export default function ListDetails() {
           Add the first gift to this list. Guests will only see gifts after you add them.
         </p>
 
-        <Link to="/lists/new" className="mt-6 inline-flex">
+        <Link to="/lists/test/gifts/new" className="mt-6 inline-flex">
           <Button>Add first gift</Button>
         </Link>
       </div>

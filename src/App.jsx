@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import CreateList from './pages/CreateList'
 import ListDetails from './pages/ListDetails'
+import AddGift from './pages/AddGift'
 import PublicList from './pages/PublicList'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/lists/new" element={<CreateList />} />
           <Route path="/lists/:id" element={<ListDetails />} />
+          <Route path="/lists/:id/gifts/new" element={<AddGift />} />
           <Route path="/share/:slug" element={<PublicList />} />
         </Routes>
       </Layout>
