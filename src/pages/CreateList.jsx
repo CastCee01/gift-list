@@ -1,3 +1,7 @@
+import Button from '../components/Button'
+import Input from '../components/Input'
+import Textarea from '../components/Textarea'
+
 export default function CreateList() {
   return (
     <section className="mx-auto max-w-2xl py-6">
@@ -9,61 +13,27 @@ export default function CreateList() {
       </div>
 
       <form className="space-y-5 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-gray-700" htmlFor="title">
-            List title
-          </label>
-          <input
-            id="title"
-            type="text"
-            placeholder="My wishlist"
-            className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
-          />
-        </div>
+        <Input id="title" label="List title" type="text" placeholder="My wishlist" />
 
         <div className="grid gap-5 sm:grid-cols-2">
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700" htmlFor="purpose">
-              Purpose
-            </label>
-            <input
-              id="purpose"
-              type="text"
-              placeholder="Birthday, home, wedding, personal..."
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700" htmlFor="targetDate">
-              Target date optional
-            </label>
-            <input
-              id="targetDate"
-              type="date"
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
-            />
-          </div>
-        </div>
-
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-gray-700" htmlFor="description">
-            Description
-          </label>
-          <textarea
-            id="description"
-            rows="4"
-            placeholder="Tell people what this list is for..."
-            className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
+          <Input
+            id="purpose"
+            label="Purpose"
+            type="text"
+            placeholder="Birthday, home, wedding, personal..."
           />
+
+          <Input id="targetDate" label="Target date optional" type="date" />
         </div>
 
-        <button
-          type="button"
-          className="rounded-full bg-purple-700 px-6 py-3 font-semibold text-white hover:bg-purple-800"
-        >
-          Create list
-        </button>
+        <Textarea
+          id="description"
+          label="Description"
+          rows="4"
+          placeholder="Tell people what this list is for..."
+        />
+
+        <Button>Create list</Button>
       </form>
     </section>
   )

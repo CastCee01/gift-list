@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
 
+import Button from '../components/Button'
+import Input from '../components/Input'
+
 export default function Signup() {
   return (
     <section className="mx-auto max-w-md py-10">
@@ -12,48 +15,13 @@ export default function Signup() {
         </div>
 
         <form className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700" htmlFor="name">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              placeholder="Your name"
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
-            />
-          </div>
+          <Input id="name" label="Name" type="text" placeholder="Your name" />
 
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700" htmlFor="email">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
-            />
-          </div>
+          <Input id="email" label="Email" type="email" placeholder="you@example.com" />
 
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700" htmlFor="password">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Create a password"
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
-            />
-          </div>
+          <Input id="password" label="Password" type="password" placeholder="Create a password" />
 
-          <button
-            type="button"
-            className="w-full rounded-full bg-purple-700 px-6 py-3 font-semibold text-white hover:bg-purple-800"
-          >
-            Create account
-          </button>
+          <Button className="w-full">Create account</Button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">

@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+import Button from '../components/Button'
+
 export default function Dashboard() {
   return (
     <section className="space-y-8 py-6">
@@ -11,11 +13,8 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <Link
-          to="/lists/new"
-          className="rounded-full bg-purple-700 px-5 py-3 text-center font-semibold text-white hover:bg-purple-800"
-        >
-          Create new list
+        <Link to="/lists/new">
+          <Button>Create new list</Button>
         </Link>
       </div>
 
@@ -25,11 +24,8 @@ export default function Dashboard() {
           Create your first list, add gift ideas, and share it with friends or family.
         </p>
 
-        <Link
-          to="/lists/new"
-          className="mt-6 inline-flex rounded-full bg-purple-700 px-5 py-3 font-semibold text-white hover:bg-purple-800"
-        >
-          Create your first list
+        <Link to="/lists/new" className="mt-6 inline-flex">
+          <Button>Create your first list</Button>
         </Link>
       </div>
     </section>
