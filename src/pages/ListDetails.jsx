@@ -5,12 +5,14 @@ import Button from '../components/Button'
 import { getCurrentUser } from '../services/authService'
 import { getGiftsByListId } from '../services/giftService'
 import { getListById } from '../services/listService'
+import { getReservationsByListId } from '../services/reservationService'
 
 export default function ListDetails() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [list, setList] = useState(null)
   const [gifts, setGifts] = useState([])
+  const [reservations, setReservations] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -26,9 +28,11 @@ export default function ListDetails() {
 
         const listData = await getListById(id)
         const giftData = await getGiftsByListId(id)
+        const reservationData = await getReservationsByListId(id)
 
         setList(listData)
         setGifts(giftData)
+        setReservations(reservationData)
       } catch (error) {
         setErrorMessage(error.message || 'Could not load this gift list.')
       } finally {
@@ -38,6 +42,15 @@ export default function ListDetails() {
 
     loadList()
   }, [id, navigate])
+
+  function getReservationForGift(giftId) {
+    return reservations.find((reservation) => reservation.gift_item_id === giftId)
+  }
+
+  function copyShareLink() {
+    const shareUrl = window.location.origin + '/share/' + list.slug
+    navigator.clipboard.writeText(shareUrl)
+  }
 
   if (isLoading) {
     return (
@@ -65,13 +78,16 @@ export default function ListDetails() {
             {list?.purpose || 'Gift list'}
           </p>
           <h1 className="mt-1 text-3xl font-bold text-gray-950">{list?.title}</h1>
+
           {list?.description && (
             <p className="mt-2 max-w-2xl text-gray-600">{list.description}</p>
           )}
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Button variant="secondary">Copy share link</Button>
+          <Button variant="secondary" onClick={copyShareLink}>
+            Copy share link
+          </Button>
 
           <Link to={`/lists/${id}/gifts/new`}>
             <Button>Add gift</Button>
@@ -92,28 +108,68 @@ export default function ListDetails() {
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
-          {gifts.map((gift) => (
-            <article
-              key={gift.id}
-              className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm"
-            >
-              <h2 className="text-lg font-semibold text-gray-950">{gift.name}</h2>
+          {gifts.map((gift) => {
+            const reservation = getReservationForGift(gift.id)
+            const isReserved = gift.status === 'reserved'
 
-              {gift.description && (
-                <p className="mt-2 text-sm text-gray-600">{gift.description}</p>
-              )}
+            return (
+              <article
+                key={gift.id}
+                className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <h2 className="text-lg font-semibold text-gray-950">{gift.name}</h2>
 
-              {gift.price && (
-                <p className="mt-3 text-sm font-semibold text-gray-800">
-                  {gift.price} {gift.currency}
+                  <span
+                    className={
+                      isReserved
+                        ? 'rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold text-orange-700'
+                        : 'rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700'
+                    }
+                  >
+                    {isReserved ? 'Reserved' : 'Available'}
+                  </span>
+                </div>
+
+                {gift.description && (
+                  <p className="mt-2 text-sm text-gray-600">{gift.description}</p>
+                )}
+
+                {gift.price && (
+                  <p className="mt-3 text-sm font-semibold text-gray-800">
+                    {gift.price} {gift.currency}
+                  </p>
+                )}
+
+                <p className="mt-4 text-xs font-semibold uppercase text-purple-700">
+                  {gift.priority}
                 </p>
-              )}
 
-              <p className="mt-4 text-xs font-semibold uppercase text-purple-700">
-                {gift.priority}
-              </p>
-            </article>
-          ))}
+                {reservation && (
+                  <div className="mt-4 rounded-2xl bg-gray-50 p-4 text-sm text-gray-700">
+                    <p>
+                      <span className="font-semibold">Reserved by:</span>{' '}
+                      {reservation.guest_name}
+                    </p>
+
+                    {reservation.guest_email && (
+                      <p className="mt-1">
+                        <span className="font-semibold">Email:</span>{' '}
+                        {reservation.guest_email}
+                      </p>
+                    )}
+
+                    {reservation.message && (
+                      <p className="mt-1">
+                        <span className="font-semibold">Message:</span>{' '}
+                        {reservation.message}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </article>
+            )
+          })}
         </div>
       )}
     </section>

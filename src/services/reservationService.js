@@ -30,3 +30,17 @@ export async function reserveGift({
 
   return data
 }
+
+export async function getReservationsByListId(listId) {
+  const client = requireSupabase()
+
+  const { data, error } = await client
+    .from('reservations')
+    .select('*')
+    .eq('list_id', listId)
+    .eq('status', 'active')
+
+  if (error) throw error
+
+  return data
+}
