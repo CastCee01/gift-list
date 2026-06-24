@@ -1,94 +1,124 @@
-# Gift List 🎁
-#### Video Demo: https://www.youtube.com/watch?v=ETIpRx-wc6A  
-#### Author: Cicero Narciso Castanheira  
-#### GitHub: [CastCee01](https://github.com/CastCee01)  
-#### edX Username: [cicerocastanheira](https://profile.edx.org/u/cicerocastanheira)  
-#### Location & Date: Maputo, Mozambique — 27 August 2025  
+# Gift List
 
----
+Gift List is a web app for creating and sharing gift lists so guests can reserve gifts and avoid buying duplicates.
 
-## Description
-**Gift List** is my final project for CS50x. It’s a simple wishlist app where users can add items they’d like to receive as gifts, with optional links and notes. The app helps friends and family choose gifts with more confidence, reducing guesswork and making occasions like birthdays and Secret Santa easier.  
+Live app: https://gift-list-alpha.vercel.app/
 
-This project represents the culmination of my CS50 journey. It allowed me to apply concepts of **frontend development, state management, form validation, persistent storage, and responsive design**. While simple in scope, the app demonstrates the key principles of modern web development — from modular React components to Tailwind-based UI polish.  
+## Overview
 
-The app currently uses **LocalStorage** for persistence. That means every user’s data is stored in their own browser, surviving refreshes and restarts. In the future, this could be extended with a backend (Firebase or Supabase) to enable account creation, sharing lists with others, and advanced features like purchase tracking.  
+Gift List allows a user to create an account, create gift lists, add gift ideas, and share a public link with guests. Guests can open the shared list without creating an account and reserve a gift. Once a gift is reserved, it becomes unavailable for other guests.
 
----
+## Main Features
 
-## Features
-- ➕ Add gifts with:
-  - Title (required)  
-  - Link (optional, URL-validated)  
-  - Note (optional, e.g., size or color preferences)  
-- 🔍 Search gifts by title or note  
-- 🗑 Delete individual gifts (with confirmation dialog)  
-- ⚠️ Clear all gifts (with confirmation dialog)  
-- 💾 Persistent storage with LocalStorage  
-- 📱 Responsive, mobile-friendly UI with TailwindCSS  
-
----
+* User signup and login
+* Create multiple gift lists
+* Add gifts to a list
+* Public share link for each list
+* Guest gift reservation without account
+* Reserved gifts are blocked from duplicate reservation
+* Owner can see who reserved each gift
+* Live deployment on Vercel
 
 ## Tech Stack
-- **Frontend:** React (Vite)  
-- **Styling:** Tailwind CSS v4 (via `@tailwindcss/postcss`)  
-- **Storage:** LocalStorage (browser-based persistence)  
-- **Deployment:** Vercel  
 
----
+* React
+* Vite
+* Tailwind CSS
+* React Router
+* Supabase Auth
+* Supabase PostgreSQL
+* Vercel
 
-## Project Structure
-gift-list/
-├── public/ # Static files
-├── src/
-│ ├── App.jsx # Core app logic + UI
-│ ├── main.jsx # React entry point
-│ └── index.css # Tailwind import + base styles
-├── index.html # Root HTML
-├── package.json # Dependencies + scripts
-├── postcss.config.js # Tailwind PostCSS config
-└── README.md # This file
+## Main User Flow
 
----
+1. User creates an account or logs in.
+2. User creates a gift list.
+3. User adds gifts to the list.
+4. User copies and shares the public list link.
+5. Guest opens the public link.
+6. Guest reserves a gift.
+7. Gift becomes reserved.
+8. Owner can see the reservation details.
 
-## How to Run Locally
+## Local Setup
 
-1. Clone the repository:
+Clone the repository:
 
-   ```bash
-   git clone https://github.com/CastCee01/gift-list.git
-   cd gift-list
+```bash
+git clone https://github.com/CastCee01/gift-list.git
+cd gift-list
+```
 
-2. Install dependencies:
+Install dependencies:
 
+```bash
 npm install
+```
 
-3. Start the dev server:
+Create a `.env` file in the project root:
 
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_publishable_key
+```
+
+Run the development server:
+
+```bash
 npm run dev
+```
 
-4. Open the printed URL (default: http://localhost:5173).
+Build for production:
 
-Design Decisions
+```bash
+npm run build
+```
 
-- Chose LocalStorage for simplicity and persistence without a backend.
-- Used Tailwind CSS v4 for fast, modern styling and responsive design.
-- Added confirmation dialogs for deletion/clear actions to prevent mistakes.
-- Implemented responsive layout to support both desktop and mobile users.
-- Deployed with Vercel for easy global access and testing.
-- Possible Future Improvements
+## Environment Variables
 
-- 🔑 User accounts with authentication (Google login, etc.)
-- 🔗 Shareable links for others to view your list
-- 🎁 “Purchased” flow (items hidden from visitors, visible only to owner)
-- 🖼 Image previews, price info, sorting/filtering
-- ☁️ Cloud backend with Firebase/Supabase for multi-user support
+The app requires these environment variables:
 
-AI Usage
+```env
+VITE_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY
+```
 
-AI tools (including ChatGPT) were used as helpers to debug Tailwind/PostCSS setup, improve UI polish, and guide architectural decisions.
-All design and final code were written by me; AI acted as a productivity amplifier, not a replacement for problem-solving.
+These are configured locally in `.env` and in Vercel under Environment Variables.
 
-Links
-- 🌐 Live demo: https://gift-list-alpha.vercel.app/
-- 💻 Source code: https://github.com/CastCee01/gift-list
+## Database
+
+The app uses Supabase with these main tables:
+
+* `profiles`
+* `gift_lists`
+* `gift_items`
+* `reservations`
+
+Reservations are handled through a Supabase function to prevent duplicate gift reservations.
+
+## MVP Status
+
+Current MVP status: functional.
+
+Completed:
+
+* Authentication
+* Database schema
+* Private dashboard
+* Gift list creation
+* Gift creation
+* Public sharing
+* Guest reservations
+* Owner reservation visibility
+* Production deployment
+
+Possible future improvements:
+
+* Gift editing
+* Gift deletion from UI
+* Better image handling
+* Email notifications
+* Reservation cancellation
+* Improved profile settings
+* Custom list themes
+* Better mobile polish
