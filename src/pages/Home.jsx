@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { getCurrentUser } from '../services/authService'
 
 export default function Home() {
   const navigate = useNavigate()
+  const [isCheckingUser, setIsCheckingUser] = useState(true)
 
   useEffect(() => {
     async function redirectLoggedInUser() {
@@ -12,11 +13,22 @@ export default function Home() {
 
       if (user) {
         navigate('/dashboard')
+        return
       }
+
+      setIsCheckingUser(false)
     }
 
     redirectLoggedInUser()
   }, [navigate])
+
+  if (isCheckingUser) {
+    return (
+      <section className="py-10">
+        <p className="text-gray-600">Loading...</p>
+      </section>
+    )
+  }
 
   return (
     <section className="grid gap-8 py-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
