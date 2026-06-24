@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import Button from '../components/Button'
 import Input from '../components/Input'
-import { signIn } from '../services/authService'
+import { getCurrentUser, signIn } from '../services/authService'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -13,6 +13,18 @@ export default function Login() {
   })
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    async function redirectLoggedInUser() {
+      const user = await getCurrentUser()
+
+      if (user) {
+        navigate('/dashboard')
+      }
+    }
+
+    redirectLoggedInUser()
+  }, [navigate])
 
   function handleChange(event) {
     const { id, value } = event.target
