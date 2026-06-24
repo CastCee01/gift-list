@@ -1,6 +1,23 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { getCurrentUser } from '../services/authService'
 
 export default function Home() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    async function redirectLoggedInUser() {
+      const user = await getCurrentUser()
+
+      if (user) {
+        navigate('/dashboard')
+      }
+    }
+
+    redirectLoggedInUser()
+  }, [navigate])
+
   return (
     <section className="grid gap-8 py-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
       <div className="space-y-6">
