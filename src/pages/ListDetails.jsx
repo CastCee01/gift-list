@@ -15,6 +15,7 @@ export default function ListDetails() {
   const [reservations, setReservations] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
+  const [copyMessage, setCopyMessage] = useState('')
 
   useEffect(() => {
     async function loadList() {
@@ -47,9 +48,16 @@ export default function ListDetails() {
     return reservations.find((reservation) => reservation.gift_item_id === giftId)
   }
 
-  function copyShareLink() {
+  async function copyShareLink() {
     const shareUrl = window.location.origin + '/share/' + list.slug
-    navigator.clipboard.writeText(shareUrl)
+
+    await navigator.clipboard.writeText(shareUrl)
+
+    setCopyMessage('Copied!')
+
+    setTimeout(() => {
+      setCopyMessage('')
+    }, 2500)
   }
 
   if (isLoading) {
@@ -86,7 +94,7 @@ export default function ListDetails() {
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button variant="secondary" onClick={copyShareLink}>
-            Copy share link
+            {copyMessage || 'Copy share link'}
           </Button>
 
           <Link to={`/lists/${id}/gifts/new`}>
