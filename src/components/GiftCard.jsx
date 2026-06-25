@@ -13,18 +13,18 @@ export default function GiftCard({
     <article
       className={
         isReserved && mode === 'public'
-          ? 'rounded-3xl border border-gray-200 bg-gray-100 p-5 opacity-70'
-          : 'rounded-3xl border border-gray-200 bg-white p-5 shadow-sm'
+          ? 'rounded-3xl border border-[#EADDD2] bg-[#F4E7D8] p-5 opacity-70'
+          : 'rounded-3xl border border-[#EADDD2] bg-white p-5 shadow-sm'
       }
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-gray-950">{gift.name}</h2>
-          {gift.price && <p className="mt-1 text-sm text-gray-600">{gift.price}</p>}
+          <h2 className="text-lg font-semibold text-[#2A1F1A]">{gift.name}</h2>
+          {gift.price && <p className="mt-1 text-sm text-[#6F6258]">{gift.price}</p>}
         </div>
 
         {gift.priority && (
-          <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold text-purple-700">
+          <span className="rounded-full bg-[#F4E7D8] px-3 py-1 text-xs font-semibold text-[#8F6A46]">
             {gift.priority}
           </span>
         )}
@@ -52,7 +52,7 @@ export default function GiftCard({
           </Button>
         ) : (
           <div className="flex gap-3 text-sm font-semibold">
-            <button type="button" onClick={onEdit} className="text-gray-600 hover:text-purple-700">
+            <button type="button" onClick={onEdit} className="text-[#6F6258] hover:text-[#8F6A46]">
               Edit
             </button>
             <button type="button" onClick={onDelete} className="text-red-600 hover:text-red-700">

@@ -39,7 +39,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <section className="py-6">
-        <p className="text-gray-600">{t('dashboardLoading')}</p>
+        <p className="text-[#6F6258]">{t('dashboardLoading')}</p>
       </section>
     )
   }
@@ -48,10 +48,10 @@ export default function Dashboard() {
     <section className="space-y-8 py-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-950">
+          <h1 className="text-3xl font-bold text-[#2A1F1A]">
             {t('dashboardTitle')}
           </h1>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-[#6F6258]">
             {t('dashboardDescription')}
           </p>
         </div>
@@ -68,11 +68,11 @@ export default function Dashboard() {
       )}
 
       {lists.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
-          <h2 className="text-xl font-semibold text-gray-950">
+        <div className="rounded-3xl border border-dashed border-[#EADDD2] bg-white p-8 text-center">
+          <h2 className="text-xl font-semibold text-[#2A1F1A]">
             {t('dashboardEmptyTitle')}
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-gray-600">
+          <p className="mx-auto mt-2 max-w-md text-[#6F6258]">
             {t('dashboardEmptyDescription')}
           </p>
 
@@ -86,23 +86,23 @@ export default function Dashboard() {
             <Link
               key={list.id}
               to={`/lists/${list.id}`}
-              className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-purple-700"
+              className="rounded-3xl border border-[#EADDD2] bg-white p-5 shadow-sm transition hover:border-[#8F6A46]"
             >
-              <p className="text-sm font-medium text-purple-700">
+              <p className="text-sm font-medium text-[#8F6A46]">
                 {list.purpose || t('dashboardGiftListFallback')}
               </p>
 
-              <h2 className="mt-2 text-xl font-semibold text-gray-950">
+              <h2 className="mt-2 text-xl font-semibold text-[#2A1F1A]">
                 {list.title}
               </h2>
 
               {list.description && (
-                <p className="mt-2 line-clamp-2 text-sm text-gray-600">
+                <p className="mt-2 line-clamp-2 text-sm text-[#6F6258]">
                   {list.description}
                 </p>
               )}
 
-              <p className="mt-4 text-sm font-semibold text-gray-700">
+              <p className="mt-4 text-sm font-semibold text-[#6F6258]">
                 {t('dashboardOpenList')}
               </p>
             </Link>

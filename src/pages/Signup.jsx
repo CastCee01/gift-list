@@ -55,12 +55,12 @@ export default function Signup() {
 
   return (
     <section className="mx-auto max-w-md py-10">
-      <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="rounded-3xl border border-[#EADDD2] bg-white p-6 shadow-sm">
         <div className="mb-6 space-y-2">
-          <h1 className="text-2xl font-bold text-gray-950">
+          <h1 className="text-2xl font-bold text-[#2A1F1A]">
             {t('signupTitle')}
           </h1>
-          <p className="text-sm text-gray-600">{t('signupDescription')}</p>
+          <p className="text-sm text-[#6F6258]">{t('signupDescription')}</p>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -105,9 +105,9 @@ export default function Signup() {
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm text-[#6F6258]">
           {t('signupHasAccount')}{' '}
-          <Link to="/login" className="font-semibold text-purple-700 hover:text-purple-800">
+          <Link to="/login" className="font-semibold text-[#8F6A46] hover:text-[#7A5637]">
             {t('signupLoginLink')}
           </Link>
         </p>

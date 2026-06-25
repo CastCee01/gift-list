@@ -87,7 +87,7 @@ export default function PublicList() {
   if (isLoading) {
     return (
       <section className="py-6">
-        <p className="text-gray-600">{t('publicListLoading')}</p>
+        <p className="text-[#6F6258]">{t('publicListLoading')}</p>
       </section>
     )
   }
@@ -104,14 +104,14 @@ export default function PublicList() {
 
   return (
     <section className="space-y-8 py-6">
-      <div className="rounded-3xl bg-purple-700 p-6 text-white">
-        <p className="text-sm font-medium text-purple-100">
+      <div className="rounded-3xl bg-[#8F6A46] p-6 text-white">
+        <p className="text-sm font-medium text-[#F4E7D8]">
           {t('publicListBadge')}
         </p>
         <h1 className="mt-2 text-3xl font-bold">{list?.title}</h1>
 
         {list?.description && (
-          <p className="mt-2 max-w-2xl text-purple-100">{list.description}</p>
+          <p className="mt-2 max-w-2xl text-[#F4E7D8]">{list.description}</p>
         )}
       </div>
 
@@ -128,11 +128,11 @@ export default function PublicList() {
       )}
 
       {gifts.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
-          <h2 className="text-xl font-semibold text-gray-950">
+        <div className="rounded-3xl border border-dashed border-[#EADDD2] bg-white p-8 text-center">
+          <h2 className="text-xl font-semibold text-[#2A1F1A]">
             {t('publicNoGiftsTitle')}
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-gray-600">
+          <p className="mx-auto mt-2 max-w-md text-[#6F6258]">
             {t('publicNoGiftsDescription')}
           </p>
         </div>
@@ -146,18 +146,18 @@ export default function PublicList() {
                 key={gift.id}
                 className={
                   isReserved
-                    ? 'rounded-3xl border border-gray-200 bg-gray-100 p-5 opacity-70'
-                    : 'rounded-3xl border border-gray-200 bg-white p-5 shadow-sm'
+                    ? 'rounded-3xl border border-[#EADDD2] bg-[#F4E7D8] p-5 opacity-70'
+                    : 'rounded-3xl border border-[#EADDD2] bg-white p-5 shadow-sm'
                 }
               >
-                <h2 className="text-lg font-semibold text-gray-950">{gift.name}</h2>
+                <h2 className="text-lg font-semibold text-[#2A1F1A]">{gift.name}</h2>
 
                 {gift.description && (
-                  <p className="mt-2 text-sm text-gray-600">{gift.description}</p>
+                  <p className="mt-2 text-sm text-[#6F6258]">{gift.description}</p>
                 )}
 
                 {gift.price && (
-                  <p className="mt-3 text-sm font-semibold text-gray-800">
+                  <p className="mt-3 text-sm font-semibold text-[#2A1F1A]">
                     {gift.price} {gift.currency}
                   </p>
                 )}
@@ -190,14 +190,14 @@ export default function PublicList() {
 
       {selectedGift && (
         <form
-          className="space-y-5 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm"
+          className="space-y-5 rounded-3xl border border-[#EADDD2] bg-white p-6 shadow-sm"
           onSubmit={handleReserve}
         >
           <div>
-            <h2 className="text-xl font-semibold text-gray-950">
+            <h2 className="text-xl font-semibold text-[#2A1F1A]">
               {t('reserveTitlePrefix')} {selectedGift.name}
             </h2>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-[#6F6258]">
               {t('reserveDescription')}
             </p>
           </div>

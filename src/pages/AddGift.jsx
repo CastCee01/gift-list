@@ -61,16 +61,16 @@ export default function AddGift() {
   return (
     <section className="mx-auto max-w-2xl py-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-950">
+        <h1 className="text-3xl font-bold text-[#2A1F1A]">
           {t('addGiftTitle')}
         </h1>
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 text-[#6F6258]">
           {t('addGiftDescription')}
         </p>
       </div>
 
       <form
-        className="space-y-5 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm"
+        className="space-y-5 rounded-3xl border border-[#EADDD2] bg-white p-6 shadow-sm"
         onSubmit={handleSubmit}
       >
         <Input
@@ -131,12 +131,12 @@ export default function AddGift() {
         />
 
         <div className="space-y-1">
-          <label className="text-sm font-medium text-gray-700" htmlFor="priority">
+          <label className="text-sm font-medium text-[#2A1F1A]" htmlFor="priority">
             {t('priorityLabel')}
           </label>
           <select
             id="priority"
-            className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-purple-700"
+            className="w-full rounded-2xl border border-[#EADDD2] bg-white px-4 py-3 text-[#2A1F1A] outline-none focus:border-[#8F6A46]"
             value={form.priority}
             onChange={handleChange}
           >

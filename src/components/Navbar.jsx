@@ -30,20 +30,20 @@ export default function Navbar() {
   }
 
   return (
-    <header className="border-b border-gray-200 bg-white">
+    <header className="border-b border-[#EADDD2] bg-white">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link
           to={user ? '/dashboard' : '/'}
-          className="text-lg font-bold text-purple-700"
+          className="text-lg font-bold text-[#8F6A46]"
         >
           {t('appName')}
         </Link>
 
-        <div className="flex items-center gap-4 text-sm font-medium text-gray-700">
+        <div className="flex items-center gap-4 text-sm font-medium text-[#2A1F1A]">
           <button
             type="button"
             onClick={toggleLanguage}
-            className="rounded-full border border-gray-300 px-3 py-2 hover:border-purple-700 hover:text-purple-700"
+            className="rounded-full border border-[#EADDD2] px-3 py-2 hover:border-[#8F6A46] hover:text-[#8F6A46]"
           >
             {language === 'en' ? 'PT' : 'EN'}
           </button>
@@ -52,23 +52,23 @@ export default function Navbar() {
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-full border border-gray-300 px-4 py-2 hover:border-purple-700 hover:text-purple-700"
+              className="rounded-full border border-[#EADDD2] px-4 py-2 hover:border-[#8F6A46] hover:text-[#8F6A46]"
             >
               {t('navLogout')}
             </button>
           ) : (
             <>
-              <Link to="/" className="hover:text-purple-700">
+              <Link to="/" className="hover:text-[#8F6A46]">
                 {t('navHome')}
               </Link>
 
-              <Link to="/login" className="hover:text-purple-700">
+              <Link to="/login" className="hover:text-[#8F6A46]">
                 {t('navLogin')}
               </Link>
 
               <Link
                 to="/signup"
-                className="rounded-full bg-purple-700 px-4 py-2 text-white hover:bg-purple-800"
+                className="rounded-full bg-[#8F6A46] px-4 py-2 text-white hover:bg-[#7A5637]"
               >
                 {t('navSignup')}
               </Link>

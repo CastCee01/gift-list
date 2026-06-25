@@ -66,7 +66,7 @@ export default function ListDetails() {
   if (isLoading) {
     return (
       <section className="py-6">
-        <p className="text-gray-600">{t('listDetailsLoading')}</p>
+        <p className="text-[#6F6258]">{t('listDetailsLoading')}</p>
       </section>
     )
   }
@@ -85,13 +85,13 @@ export default function ListDetails() {
     <section className="space-y-8 py-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
-          <p className="text-sm font-medium text-purple-700">
+          <p className="text-sm font-medium text-[#8F6A46]">
             {list?.purpose || t('listDetailsGiftListFallback')}
           </p>
-          <h1 className="mt-1 text-3xl font-bold text-gray-950">{list?.title}</h1>
+          <h1 className="mt-1 text-3xl font-bold text-[#2A1F1A]">{list?.title}</h1>
 
           {list?.description && (
-            <p className="mt-2 max-w-2xl text-gray-600">{list.description}</p>
+            <p className="mt-2 max-w-2xl text-[#6F6258]">{list.description}</p>
           )}
         </div>
 
@@ -107,11 +107,11 @@ export default function ListDetails() {
       </div>
 
       {gifts.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
-          <h2 className="text-xl font-semibold text-gray-950">
+        <div className="rounded-3xl border border-dashed border-[#EADDD2] bg-white p-8 text-center">
+          <h2 className="text-xl font-semibold text-[#2A1F1A]">
             {t('noGiftsTitle')}
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-gray-600">
+          <p className="mx-auto mt-2 max-w-md text-[#6F6258]">
             {t('noGiftsDescription')}
           </p>
 
@@ -128,10 +128,10 @@ export default function ListDetails() {
             return (
               <article
                 key={gift.id}
-                className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm"
+                className="rounded-3xl border border-[#EADDD2] bg-white p-5 shadow-sm"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <h2 className="text-lg font-semibold text-gray-950">{gift.name}</h2>
+                  <h2 className="text-lg font-semibold text-[#2A1F1A]">{gift.name}</h2>
 
                   <span
                     className={
@@ -145,36 +145,36 @@ export default function ListDetails() {
                 </div>
 
                 {gift.description && (
-                  <p className="mt-2 text-sm text-gray-600">{gift.description}</p>
+                  <p className="mt-2 text-sm text-[#6F6258]">{gift.description}</p>
                 )}
 
                 {gift.price && (
-                  <p className="mt-3 text-sm font-semibold text-gray-800">
+                  <p className="mt-3 text-sm font-semibold text-[#2A1F1A]">
                     {gift.price} {gift.currency}
                   </p>
                 )}
 
-                <p className="mt-4 text-xs font-semibold uppercase text-purple-700">
+                <p className="mt-4 text-xs font-semibold uppercase text-[#8F6A46]">
                   {gift.priority}
                 </p>
 
                 {reservation && (
-                  <div className="mt-4 rounded-2xl bg-gray-50 p-4 text-sm text-gray-700">
+                  <div className="mt-4 rounded-2xl bg-[#FFF8F1] p-4 text-sm text-[#6F6258]">
                     <p>
-                      <span className="font-semibold">{t('reservedBy')}</span>{' '}
+                      <span className="font-semibold text-[#2A1F1A]">{t('reservedBy')}</span>{' '}
                       {reservation.guest_name}
                     </p>
 
                     {reservation.guest_email && (
                       <p className="mt-1">
-                        <span className="font-semibold">{t('emailText')}</span>{' '}
+                        <span className="font-semibold text-[#2A1F1A]">{t('emailText')}</span>{' '}
                         {reservation.guest_email}
                       </p>
                     )}
 
                     {reservation.message && (
                       <p className="mt-1">
-                        <span className="font-semibold">{t('messageText')}</span>{' '}
+                        <span className="font-semibold text-[#2A1F1A]">{t('messageText')}</span>{' '}
                         {reservation.message}
                       </p>
                     )}
