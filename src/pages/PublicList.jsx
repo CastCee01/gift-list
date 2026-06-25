@@ -4,12 +4,15 @@ import { useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Textarea from '../components/Textarea'
+import { useLanguage } from '../i18n/LanguageContext'
 import { getGiftsByListId } from '../services/giftService'
-import { reserveGift } from '../services/reservationService'
 import { getPublicListBySlug } from '../services/listService'
+import { reserveGift } from '../services/reservationService'
 
 export default function PublicList() {
   const { slug } = useParams()
+  const { t } = useLanguage()
+
   const [list, setList] = useState(null)
   const [gifts, setGifts] = useState([])
   const [selectedGift, setSelectedGift] = useState(null)
@@ -31,7 +34,7 @@ export default function PublicList() {
       setList(listData)
       setGifts(giftData)
     } catch (error) {
-      setErrorMessage(error.message || 'Could not load this shared list.')
+      setErrorMessage(error.message || t('publicListErrorFallback'))
     } finally {
       setIsLoading(false)
     }
@@ -65,7 +68,7 @@ export default function PublicList() {
         message: form.message,
       })
 
-      setSuccessMessage('Gift reserved successfully.')
+      setSuccessMessage(t('publicListSuccess'))
       setSelectedGift(null)
       setForm({
         guestName: '',
@@ -75,7 +78,7 @@ export default function PublicList() {
 
       await loadPublicList()
     } catch (error) {
-      setErrorMessage(error.message || 'Could not reserve this gift.')
+      setErrorMessage(error.message || t('publicListReserveErrorFallback'))
     } finally {
       setIsReserving(false)
     }
@@ -84,7 +87,7 @@ export default function PublicList() {
   if (isLoading) {
     return (
       <section className="py-6">
-        <p className="text-gray-600">Loading shared list...</p>
+        <p className="text-gray-600">{t('publicListLoading')}</p>
       </section>
     )
   }
@@ -102,7 +105,9 @@ export default function PublicList() {
   return (
     <section className="space-y-8 py-6">
       <div className="rounded-3xl bg-purple-700 p-6 text-white">
-        <p className="text-sm font-medium text-purple-100">Shared gift list</p>
+        <p className="text-sm font-medium text-purple-100">
+          {t('publicListBadge')}
+        </p>
         <h1 className="mt-2 text-3xl font-bold">{list?.title}</h1>
 
         {list?.description && (
@@ -124,9 +129,11 @@ export default function PublicList() {
 
       {gifts.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
-          <h2 className="text-xl font-semibold text-gray-950">No gifts available yet</h2>
+          <h2 className="text-xl font-semibold text-gray-950">
+            {t('publicNoGiftsTitle')}
+          </h2>
           <p className="mx-auto mt-2 max-w-md text-gray-600">
-            This shared list does not have visible gifts yet. Check again later.
+            {t('publicNoGiftsDescription')}
           </p>
         </div>
       ) : (
@@ -163,7 +170,7 @@ export default function PublicList() {
                         : 'rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700'
                     }
                   >
-                    {isReserved ? 'Reserved' : 'Available'}
+                    {isReserved ? t('reserved') : t('available')}
                   </span>
 
                   <Button
@@ -172,7 +179,7 @@ export default function PublicList() {
                     className="px-4 py-2 text-sm"
                     onClick={() => setSelectedGift(gift)}
                   >
-                    {isReserved ? 'Already reserved' : 'Reserve gift'}
+                    {isReserved ? t('alreadyReserved') : t('reserveGift')}
                   </Button>
                 </div>
               </article>
@@ -188,18 +195,18 @@ export default function PublicList() {
         >
           <div>
             <h2 className="text-xl font-semibold text-gray-950">
-              Reserve: {selectedGift.name}
+              {t('reserveTitlePrefix')} {selectedGift.name}
             </h2>
             <p className="mt-1 text-sm text-gray-600">
-              Add your name so the owner knows who reserved it.
+              {t('reserveDescription')}
             </p>
           </div>
 
           <Input
             id="guestName"
-            label="Your name"
+            label={t('guestNameLabel')}
             type="text"
-            placeholder="Your name"
+            placeholder={t('guestNamePlaceholder')}
             value={form.guestName}
             onChange={handleChange}
             required
@@ -207,25 +214,25 @@ export default function PublicList() {
 
           <Input
             id="guestEmail"
-            label="Email optional"
+            label={t('guestEmailLabel')}
             type="email"
-            placeholder="you@example.com"
+            placeholder={t('emailPlaceholder')}
             value={form.guestEmail}
             onChange={handleChange}
           />
 
           <Textarea
             id="message"
-            label="Message optional"
+            label={t('messageOptionalLabel')}
             rows="3"
-            placeholder="Add a short message..."
+            placeholder={t('messagePlaceholder')}
             value={form.message}
             onChange={handleChange}
           />
 
           <div className="flex gap-3">
             <Button type="submit" disabled={isReserving}>
-              {isReserving ? 'Reserving...' : 'Confirm reservation'}
+              {isReserving ? t('reserving') : t('confirmReservation')}
             </Button>
 
             <Button
@@ -233,7 +240,7 @@ export default function PublicList() {
               variant="secondary"
               onClick={() => setSelectedGift(null)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </div>
         </form>

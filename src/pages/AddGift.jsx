@@ -4,11 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Textarea from '../components/Textarea'
+import { useLanguage } from '../i18n/LanguageContext'
 import { createGift } from '../services/giftService'
 
 export default function AddGift() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -49,7 +52,7 @@ export default function AddGift() {
 
       navigate(`/lists/${id}`)
     } catch (error) {
-      setErrorMessage(error.message || 'Could not add gift.')
+      setErrorMessage(error.message || t('addGiftErrorFallback'))
     } finally {
       setIsLoading(false)
     }
@@ -58,9 +61,11 @@ export default function AddGift() {
   return (
     <section className="mx-auto max-w-2xl py-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-950">Add gift</h1>
+        <h1 className="text-3xl font-bold text-gray-950">
+          {t('addGiftTitle')}
+        </h1>
         <p className="mt-2 text-gray-600">
-          Add the gift details so guests know exactly what you would like.
+          {t('addGiftDescription')}
         </p>
       </div>
 
@@ -70,9 +75,9 @@ export default function AddGift() {
       >
         <Input
           id="name"
-          label="Gift name"
+          label={t('giftNameLabel')}
           type="text"
-          placeholder="Wireless headphones"
+          placeholder={t('giftNamePlaceholder')}
           value={form.name}
           onChange={handleChange}
           required
@@ -80,9 +85,9 @@ export default function AddGift() {
 
         <Textarea
           id="description"
-          label="Description"
+          label={t('descriptionLabel')}
           rows="4"
-          placeholder="Color, size, model, or any extra details..."
+          placeholder={t('giftDescriptionPlaceholder')}
           value={form.description}
           onChange={handleChange}
         />
@@ -90,18 +95,18 @@ export default function AddGift() {
         <div className="grid gap-5 sm:grid-cols-2">
           <Input
             id="price"
-            label="Price optional"
+            label={t('priceOptionalLabel')}
             type="number"
-            placeholder="2500"
+            placeholder={t('pricePlaceholder')}
             value={form.price}
             onChange={handleChange}
           />
 
           <Input
             id="currency"
-            label="Currency"
+            label={t('currencyLabel')}
             type="text"
-            placeholder="MZN"
+            placeholder={t('currencyPlaceholder')}
             value={form.currency}
             onChange={handleChange}
           />
@@ -109,25 +114,25 @@ export default function AddGift() {
 
         <Input
           id="productUrl"
-          label="Product link optional"
+          label={t('productUrlLabel')}
           type="url"
-          placeholder="https://store.com/item"
+          placeholder={t('productUrlPlaceholder')}
           value={form.productUrl}
           onChange={handleChange}
         />
 
         <Input
           id="imageUrl"
-          label="Image link optional"
+          label={t('imageUrlLabel')}
           type="url"
-          placeholder="https://example.com/image.jpg"
+          placeholder={t('imageUrlPlaceholder')}
           value={form.imageUrl}
           onChange={handleChange}
         />
 
         <div className="space-y-1">
           <label className="text-sm font-medium text-gray-700" htmlFor="priority">
-            Priority
+            {t('priorityLabel')}
           </label>
           <select
             id="priority"
@@ -135,9 +140,9 @@ export default function AddGift() {
             value={form.priority}
             onChange={handleChange}
           >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            <option value="low">{t('priorityLow')}</option>
+            <option value="medium">{t('priorityMedium')}</option>
+            <option value="high">{t('priorityHigh')}</option>
           </select>
         </div>
 
@@ -148,7 +153,7 @@ export default function AddGift() {
         )}
 
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Adding gift...' : 'Add gift'}
+          {isLoading ? t('addGiftSubmitting') : t('addGift')}
         </Button>
       </form>
     </section>

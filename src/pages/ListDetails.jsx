@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import Button from '../components/Button'
+import { useLanguage } from '../i18n/LanguageContext'
 import { getCurrentUser } from '../services/authService'
 import { getGiftsByListId } from '../services/giftService'
 import { getListById } from '../services/listService'
@@ -10,6 +11,8 @@ import { getReservationsByListId } from '../services/reservationService'
 export default function ListDetails() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
   const [list, setList] = useState(null)
   const [gifts, setGifts] = useState([])
   const [reservations, setReservations] = useState([])
@@ -35,14 +38,14 @@ export default function ListDetails() {
         setGifts(giftData)
         setReservations(reservationData)
       } catch (error) {
-        setErrorMessage(error.message || 'Could not load this gift list.')
+        setErrorMessage(error.message || t('listDetailsErrorFallback'))
       } finally {
         setIsLoading(false)
       }
     }
 
     loadList()
-  }, [id, navigate])
+  }, [id, navigate, t])
 
   function getReservationForGift(giftId) {
     return reservations.find((reservation) => reservation.gift_item_id === giftId)
@@ -53,7 +56,7 @@ export default function ListDetails() {
 
     await navigator.clipboard.writeText(shareUrl)
 
-    setCopyMessage('Copied!')
+    setCopyMessage(t('copied'))
 
     setTimeout(() => {
       setCopyMessage('')
@@ -63,7 +66,7 @@ export default function ListDetails() {
   if (isLoading) {
     return (
       <section className="py-6">
-        <p className="text-gray-600">Loading gift list...</p>
+        <p className="text-gray-600">{t('listDetailsLoading')}</p>
       </section>
     )
   }
@@ -83,7 +86,7 @@ export default function ListDetails() {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
           <p className="text-sm font-medium text-purple-700">
-            {list?.purpose || 'Gift list'}
+            {list?.purpose || t('listDetailsGiftListFallback')}
           </p>
           <h1 className="mt-1 text-3xl font-bold text-gray-950">{list?.title}</h1>
 
@@ -94,24 +97,26 @@ export default function ListDetails() {
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button variant="secondary" onClick={copyShareLink}>
-            {copyMessage || 'Copy share link'}
+            {copyMessage || t('copyShareLink')}
           </Button>
 
           <Link to={`/lists/${id}/gifts/new`}>
-            <Button>Add gift</Button>
+            <Button>{t('addGift')}</Button>
           </Link>
         </div>
       </div>
 
       {gifts.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
-          <h2 className="text-xl font-semibold text-gray-950">No gifts yet</h2>
+          <h2 className="text-xl font-semibold text-gray-950">
+            {t('noGiftsTitle')}
+          </h2>
           <p className="mx-auto mt-2 max-w-md text-gray-600">
-            Add the first gift to this list. Guests will only see gifts after you add them.
+            {t('noGiftsDescription')}
           </p>
 
           <Link to={`/lists/${id}/gifts/new`} className="mt-6 inline-flex">
-            <Button>Add first gift</Button>
+            <Button>{t('addFirstGift')}</Button>
           </Link>
         </div>
       ) : (
@@ -135,7 +140,7 @@ export default function ListDetails() {
                         : 'rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700'
                     }
                   >
-                    {isReserved ? 'Reserved' : 'Available'}
+                    {isReserved ? t('reserved') : t('available')}
                   </span>
                 </div>
 
@@ -156,20 +161,20 @@ export default function ListDetails() {
                 {reservation && (
                   <div className="mt-4 rounded-2xl bg-gray-50 p-4 text-sm text-gray-700">
                     <p>
-                      <span className="font-semibold">Reserved by:</span>{' '}
+                      <span className="font-semibold">{t('reservedBy')}</span>{' '}
                       {reservation.guest_name}
                     </p>
 
                     {reservation.guest_email && (
                       <p className="mt-1">
-                        <span className="font-semibold">Email:</span>{' '}
+                        <span className="font-semibold">{t('emailText')}</span>{' '}
                         {reservation.guest_email}
                       </p>
                     )}
 
                     {reservation.message && (
                       <p className="mt-1">
-                        <span className="font-semibold">Message:</span>{' '}
+                        <span className="font-semibold">{t('messageText')}</span>{' '}
                         {reservation.message}
                       </p>
                     )}

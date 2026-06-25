@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import Button from '../components/Button'
+import { useLanguage } from '../i18n/LanguageContext'
 import { getCurrentUser } from '../services/authService'
 import { getLists } from '../services/listService'
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
   const [lists, setLists] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
@@ -24,19 +27,19 @@ export default function Dashboard() {
         const userLists = await getLists(user.id)
         setLists(userLists)
       } catch (error) {
-        setErrorMessage(error.message || 'Could not load your gift lists.')
+        setErrorMessage(error.message || t('dashboardErrorFallback'))
       } finally {
         setIsLoading(false)
       }
     }
 
     loadLists()
-  }, [navigate])
+  }, [navigate, t])
 
   if (isLoading) {
     return (
       <section className="py-6">
-        <p className="text-gray-600">Loading your gift lists...</p>
+        <p className="text-gray-600">{t('dashboardLoading')}</p>
       </section>
     )
   }
@@ -45,14 +48,16 @@ export default function Dashboard() {
     <section className="space-y-8 py-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-950">Your gift lists</h1>
+          <h1 className="text-3xl font-bold text-gray-950">
+            {t('dashboardTitle')}
+          </h1>
           <p className="mt-2 text-gray-600">
-            Create, manage, and share your gift lists.
+            {t('dashboardDescription')}
           </p>
         </div>
 
         <Link to="/lists/new">
-          <Button>Create new list</Button>
+          <Button>{t('dashboardCreateNew')}</Button>
         </Link>
       </div>
 
@@ -64,13 +69,15 @@ export default function Dashboard() {
 
       {lists.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
-          <h2 className="text-xl font-semibold text-gray-950">No lists yet</h2>
+          <h2 className="text-xl font-semibold text-gray-950">
+            {t('dashboardEmptyTitle')}
+          </h2>
           <p className="mx-auto mt-2 max-w-md text-gray-600">
-            Create your first gift list and start adding gifts.
+            {t('dashboardEmptyDescription')}
           </p>
 
           <Link to="/lists/new" className="mt-6 inline-flex">
-            <Button>Create first list</Button>
+            <Button>{t('dashboardCreateFirst')}</Button>
           </Link>
         </div>
       ) : (
@@ -82,7 +89,7 @@ export default function Dashboard() {
               className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-purple-700"
             >
               <p className="text-sm font-medium text-purple-700">
-                {list.purpose || 'Gift list'}
+                {list.purpose || t('dashboardGiftListFallback')}
               </p>
 
               <h2 className="mt-2 text-xl font-semibold text-gray-950">
@@ -96,7 +103,7 @@ export default function Dashboard() {
               )}
 
               <p className="mt-4 text-sm font-semibold text-gray-700">
-                Open list →
+                {t('dashboardOpenList')}
               </p>
             </Link>
           ))}

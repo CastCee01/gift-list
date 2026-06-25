@@ -3,10 +3,13 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import Button from '../components/Button'
 import Input from '../components/Input'
+import { useLanguage } from '../i18n/LanguageContext'
 import { getCurrentUser, signUp } from '../services/authService'
 
 export default function Signup() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -44,7 +47,7 @@ export default function Signup() {
       await signUp(form)
       navigate('/dashboard')
     } catch (error) {
-      setErrorMessage(error.message || 'Could not create account.')
+      setErrorMessage(error.message || t('signupErrorFallback'))
     } finally {
       setIsLoading(false)
     }
@@ -54,18 +57,18 @@ export default function Signup() {
     <section className="mx-auto max-w-md py-10">
       <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-6 space-y-2">
-          <h1 className="text-2xl font-bold text-gray-950">Create your account</h1>
-          <p className="text-sm text-gray-600">
-            Start your first gift list and share it with guests.
-          </p>
+          <h1 className="text-2xl font-bold text-gray-950">
+            {t('signupTitle')}
+          </h1>
+          <p className="text-sm text-gray-600">{t('signupDescription')}</p>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             id="name"
-            label="Name"
+            label={t('nameLabel')}
             type="text"
-            placeholder="Your name"
+            placeholder={t('namePlaceholder')}
             value={form.name}
             onChange={handleChange}
             required
@@ -73,9 +76,9 @@ export default function Signup() {
 
           <Input
             id="email"
-            label="Email"
+            label={t('emailLabel')}
             type="email"
-            placeholder="you@example.com"
+            placeholder={t('emailPlaceholder')}
             value={form.email}
             onChange={handleChange}
             required
@@ -83,9 +86,9 @@ export default function Signup() {
 
           <Input
             id="password"
-            label="Password"
+            label={t('passwordLabel')}
             type="password"
-            placeholder="Create a password"
+            placeholder={t('signupPasswordPlaceholder')}
             value={form.password}
             onChange={handleChange}
             required
@@ -98,14 +101,14 @@ export default function Signup() {
           )}
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Creating account...' : 'Create account'}
+            {isLoading ? t('signupSubmitting') : t('signupSubmit')}
           </Button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{' '}
+          {t('signupHasAccount')}{' '}
           <Link to="/login" className="font-semibold text-purple-700 hover:text-purple-800">
-            Log in
+            {t('signupLoginLink')}
           </Link>
         </p>
       </div>

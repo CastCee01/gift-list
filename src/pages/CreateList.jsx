@@ -4,11 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Textarea from '../components/Textarea'
+import { useLanguage } from '../i18n/LanguageContext'
 import { getCurrentUser } from '../services/authService'
 import { createList } from '../services/listService'
 
 export default function CreateList() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
   const [form, setForm] = useState({
     title: '',
     purpose: '',
@@ -50,7 +53,7 @@ export default function CreateList() {
 
       navigate(`/lists/${newList.id}`)
     } catch (error) {
-      setErrorMessage(error.message || 'Could not create gift list.')
+      setErrorMessage(error.message || t('createListErrorFallback'))
     } finally {
       setIsLoading(false)
     }
@@ -59,10 +62,11 @@ export default function CreateList() {
   return (
     <section className="mx-auto max-w-2xl py-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-950">Create gift list</h1>
+        <h1 className="text-3xl font-bold text-gray-950">
+          {t('createListTitle')}
+        </h1>
         <p className="mt-2 text-gray-600">
-          Add the basic details. You can use Gift List for birthdays, weddings,
-          personal wishlists, holidays, home needs, or anything else.
+          {t('createListDescription')}
         </p>
       </div>
 
@@ -72,9 +76,9 @@ export default function CreateList() {
       >
         <Input
           id="title"
-          label="List title"
+          label={t('listTitleLabel')}
           type="text"
-          placeholder="My birthday wishlist"
+          placeholder={t('listTitlePlaceholder')}
           value={form.title}
           onChange={handleChange}
           required
@@ -82,16 +86,16 @@ export default function CreateList() {
 
         <Input
           id="purpose"
-          label="Purpose"
+          label={t('purposeLabel')}
           type="text"
-          placeholder="Birthday, home needs, wedding, wishlist..."
+          placeholder={t('purposePlaceholder')}
           value={form.purpose}
           onChange={handleChange}
         />
 
         <Input
           id="targetDate"
-          label="Target date optional"
+          label={t('targetDateLabel')}
           type="date"
           value={form.targetDate}
           onChange={handleChange}
@@ -99,9 +103,9 @@ export default function CreateList() {
 
         <Textarea
           id="description"
-          label="Description"
+          label={t('descriptionLabel')}
           rows="4"
-          placeholder="Add a short note for guests..."
+          placeholder={t('descriptionPlaceholder')}
           value={form.description}
           onChange={handleChange}
         />
@@ -113,7 +117,7 @@ export default function CreateList() {
         )}
 
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Creating list...' : 'Create list'}
+          {isLoading ? t('createListSubmitting') : t('createListSubmit')}
         </Button>
       </form>
     </section>
