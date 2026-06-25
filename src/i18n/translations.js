@@ -51,6 +51,10 @@ export const translations = {
     signupHasAccount: "Already have an account?",
     signupLoginLink: "Log in",
     signupErrorFallback: "Could not create account.",
+    signupSuccessTitle: "Account created",
+    signupSuccessMessage:
+      "Check your email to confirm your account before logging in.",
+    signupGoToLogin: "Go to login",
 
     dashboardLoading: "Loading your gift lists...",
     dashboardErrorFallback: "Could not load your gift lists.",
@@ -187,6 +191,10 @@ export const translations = {
     signupHasAccount: "Já tens conta?",
     signupLoginLink: "Entrar",
     signupErrorFallback: "Não foi possível criar a conta.",
+    signupSuccessTitle: "Conta criada",
+    signupSuccessMessage:
+      "Verifica o teu email para confirmar a conta antes de entrares.",
+    signupGoToLogin: "Ir para entrar",
 
     dashboardLoading: "A carregar as tuas listas de presentes...",
     dashboardErrorFallback: "Não foi possível carregar as tuas listas de presentes.",

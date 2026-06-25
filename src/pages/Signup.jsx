@@ -17,6 +17,7 @@ export default function Signup() {
   })
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isSignupComplete, setIsSignupComplete] = useState(false)
 
   useEffect(() => {
     async function redirectLoggedInUser() {
@@ -45,12 +46,32 @@ export default function Signup() {
 
     try {
       await signUp(form)
-      navigate('/dashboard')
+      setIsSignupComplete(true)
     } catch (error) {
       setErrorMessage(error.message || t('signupErrorFallback'))
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (isSignupComplete) {
+    return (
+      <section className="mx-auto max-w-md py-10">
+        <div className="rounded-3xl border border-[#EADDD2] bg-white p-6 text-center shadow-sm">
+          <h1 className="text-2xl font-bold text-[#2A1F1A]">
+            {t('signupSuccessTitle')}
+          </h1>
+
+          <p className="mt-3 text-sm leading-6 text-[#6F6258]">
+            {t('signupSuccessMessage')}
+          </p>
+
+          <Link to="/login" className="mt-6 inline-flex">
+            <Button>{t('signupGoToLogin')}</Button>
+          </Link>
+        </div>
+      </section>
+    )
   }
 
   return (
