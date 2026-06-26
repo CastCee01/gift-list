@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import { useLanguage } from '../i18n/LanguageContext'
 import { getCurrentUser } from '../services/authService'
-import { getGiftsByListId } from '../services/giftService'
+import { deleteGift, getGiftsByListId } from '../services/giftService'
 import { getListById } from '../services/listService'
 import { getReservationsByListId } from '../services/reservationService'
 
@@ -19,6 +19,7 @@ export default function ListDetails() {
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
   const [copyMessage, setCopyMessage] = useState('')
+  const [deletingGiftId, setDeletingGiftId] = useState(null)
 
   useEffect(() => {
     async function loadList() {
@@ -63,6 +64,32 @@ export default function ListDetails() {
     }, 2500)
   }
 
+  async function handleDeleteGift(giftId) {
+    const shouldDelete = window.confirm('Delete this gift?')
+
+    if (!shouldDelete) return
+
+    try {
+      setDeletingGiftId(giftId)
+
+      await deleteGift(giftId)
+
+      setGifts((currentGifts) =>
+        currentGifts.filter((gift) => gift.id !== giftId)
+      )
+
+      setReservations((currentReservations) =>
+        currentReservations.filter(
+          (reservation) => reservation.gift_item_id !== giftId
+        )
+      )
+    } catch (error) {
+      setErrorMessage(error.message || 'Could not delete gift.')
+    } finally {
+      setDeletingGiftId(null)
+    }
+  }
+
   if (isLoading) {
     return (
       <section className="py-6">
@@ -88,10 +115,14 @@ export default function ListDetails() {
           <p className="text-sm font-medium text-[#8F6A46]">
             {list?.purpose || t('listDetailsGiftListFallback')}
           </p>
-          <h1 className="mt-1 text-3xl font-bold text-[#2A1F1A]">{list?.title}</h1>
+          <h1 className="mt-1 text-3xl font-bold text-[#2A1F1A]">
+            {list?.title}
+          </h1>
 
           {list?.description && (
-            <p className="mt-2 max-w-2xl text-[#6F6258]">{list.description}</p>
+            <p className="mt-2 max-w-2xl text-[#6F6258]">
+              {list.description}
+            </p>
           )}
         </div>
 
@@ -124,6 +155,7 @@ export default function ListDetails() {
           {gifts.map((gift) => {
             const reservation = getReservationForGift(gift.id)
             const isReserved = gift.status === 'reserved'
+            const isDeleting = deletingGiftId === gift.id
 
             return (
               <article
@@ -131,7 +163,9 @@ export default function ListDetails() {
                 className="rounded-3xl border border-[#EADDD2] bg-white p-5 shadow-sm"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <h2 className="text-lg font-semibold text-[#2A1F1A]">{gift.name}</h2>
+                  <h2 className="text-lg font-semibold text-[#2A1F1A]">
+                    {gift.name}
+                  </h2>
 
                   <span
                     className={
@@ -145,7 +179,9 @@ export default function ListDetails() {
                 </div>
 
                 {gift.description && (
-                  <p className="mt-2 text-sm text-[#6F6258]">{gift.description}</p>
+                  <p className="mt-2 text-sm text-[#6F6258]">
+                    {gift.description}
+                  </p>
                 )}
 
                 {gift.price && (
@@ -161,25 +197,42 @@ export default function ListDetails() {
                 {reservation && (
                   <div className="mt-4 rounded-2xl bg-[#FFF8F1] p-4 text-sm text-[#6F6258]">
                     <p>
-                      <span className="font-semibold text-[#2A1F1A]">{t('reservedBy')}</span>{' '}
+                      <span className="font-semibold text-[#2A1F1A]">
+                        {t('reservedBy')}
+                      </span>{' '}
                       {reservation.guest_name}
                     </p>
 
                     {reservation.guest_email && (
                       <p className="mt-1">
-                        <span className="font-semibold text-[#2A1F1A]">{t('emailText')}</span>{' '}
+                        <span className="font-semibold text-[#2A1F1A]">
+                          {t('emailText')}
+                        </span>{' '}
                         {reservation.guest_email}
                       </p>
                     )}
 
                     {reservation.message && (
                       <p className="mt-1">
-                        <span className="font-semibold text-[#2A1F1A]">{t('messageText')}</span>{' '}
+                        <span className="font-semibold text-[#2A1F1A]">
+                          {t('messageText')}
+                        </span>{' '}
                         {reservation.message}
                       </p>
                     )}
                   </div>
                 )}
+
+                <div className="mt-5 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteGift(gift.id)}
+                    disabled={isDeleting}
+                    className="rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isDeleting ? 'Deleting...' : 'Delete'}
+                  </button>
+                </div>
               </article>
             )
           })}
