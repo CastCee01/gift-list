@@ -53,7 +53,7 @@ export const translations = {
     signupErrorFallback: "Could not create account.",
     signupSuccessTitle: "Account created",
     signupSuccessMessage:
-      "Check your email to confirm your account before logging in.",
+      "Your account was created successfully. You can now use Gift List.",
     signupGoToLogin: "Go to login",
 
     dashboardLoading: "Loading your gift lists...",
@@ -62,7 +62,8 @@ export const translations = {
     dashboardDescription: "Create, manage, and share your gift lists.",
     dashboardCreateNew: "Create new list",
     dashboardEmptyTitle: "No lists yet",
-    dashboardEmptyDescription: "Create your first gift list and start adding gifts.",
+    dashboardEmptyDescription:
+      "Create your first gift list and start adding gifts.",
     dashboardCreateFirst: "Create first list",
     dashboardGiftListFallback: "Gift list",
     dashboardOpenList: "Open list →",
@@ -96,9 +97,14 @@ export const translations = {
     reservedBy: "Reserved by:",
     emailText: "Email:",
     messageText: "Message:",
+    deleteGift: "Delete",
+    confirmDeleteGift: "Confirm delete",
+    deletingGift: "Deleting...",
+    deleteGiftErrorFallback: "Could not delete gift.",
 
     addGiftTitle: "Add gift",
-    addGiftDescription: "Add the gift details so guests know exactly what you would like.",
+    addGiftDescription:
+      "Add the gift details so guests know exactly what you would like.",
     giftNameLabel: "Gift name",
     giftNamePlaceholder: "Wireless headphones",
     giftDescriptionPlaceholder: "Color, size, model, or any extra details...",
@@ -140,7 +146,7 @@ export const translations = {
   },
 
   pt: {
-    appName: "Lista de Presentes",
+    appName: "Gift List",
 
     navHome: "Início",
     navDashboard: "Painel",
@@ -156,7 +162,7 @@ export const translations = {
     homeBadge: "Planeamento simples de presentes",
     homeTitle: "Cria e partilha listas de presentes sem presentes duplicados.",
     homeDescription:
-      "A Lista de Presentes ajuda-te a organizar o que queres, partilhar com amigos e família, e permitir que convidados reservem presentes antes que alguém compre a mesma coisa duas vezes.",
+      "Gift List ajuda-te a organizar o que queres, partilhar com amigos e família, e permitir que convidados reservem presentes antes que alguém compre a mesma coisa duas vezes.",
     homeCreateButton: "Criar a minha lista",
     homeLoginButton: "Entrar",
 
@@ -193,7 +199,7 @@ export const translations = {
     signupErrorFallback: "Não foi possível criar a conta.",
     signupSuccessTitle: "Conta criada",
     signupSuccessMessage:
-      "Verifica o teu email para confirmar a conta antes de entrares.",
+      "A tua conta foi criada com sucesso. Já podes usar o Gift List.",
     signupGoToLogin: "Ir para entrar",
 
     dashboardLoading: "A carregar as tuas listas de presentes...",
@@ -210,7 +216,7 @@ export const translations = {
 
     createListTitle: "Criar lista de presentes",
     createListDescription:
-      "Adiciona os detalhes básicos. Podes usar a Lista de Presentes para aniversários, casamentos, listas de desejos, feriados, necessidades de casa ou qualquer outra coisa.",
+      "Adiciona os detalhes básicos. Podes usar o Gift List para aniversários, casamentos, listas de desejos, feriados, necessidades de casa ou qualquer outra coisa.",
     listTitleLabel: "Título da lista",
     listTitlePlaceholder: "A minha lista de aniversário",
     purposeLabel: "Finalidade",
@@ -237,6 +243,10 @@ export const translations = {
     reservedBy: "Reservado por:",
     emailText: "Email:",
     messageText: "Mensagem:",
+    deleteGift: "Apagar",
+    confirmDeleteGift: "Confirmar",
+    deletingGift: "A apagar...",
+    deleteGiftErrorFallback: "Não foi possível apagar o presente.",
 
     addGiftTitle: "Adicionar presente",
     addGiftDescription:
@@ -280,4 +290,4 @@ export const translations = {
     reserving: "A reservar...",
     cancel: "Cancelar",
   },
-};
+}

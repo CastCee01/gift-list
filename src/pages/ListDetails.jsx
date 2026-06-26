@@ -53,6 +53,15 @@ export default function ListDetails() {
     return reservations.find((reservation) => reservation.gift_item_id === giftId)
   }
 
+  function getPriorityLabel(priority) {
+    const normalizedPriority = String(priority || '').toLowerCase()
+
+    if (normalizedPriority === 'low') return t('priorityLow')
+    if (normalizedPriority === 'high') return t('priorityHigh')
+
+    return t('priorityMedium')
+  }
+
   async function copyShareLink() {
     const shareUrl = window.location.origin + '/share/' + list.slug
 
@@ -83,7 +92,7 @@ export default function ListDetails() {
 
       setConfirmingDeleteGiftId(null)
     } catch (error) {
-      setErrorMessage(error.message || 'Could not delete gift.')
+      setErrorMessage(error.message || t('deleteGiftErrorFallback'))
     } finally {
       setDeletingGiftId(null)
     }
@@ -192,8 +201,8 @@ export default function ListDetails() {
                   </p>
                 )}
 
-                <p className="mt-4 text-xs font-semibold uppercase text-[#8F6A46]">
-                  {gift.priority}
+                <p className="mt-4 text-xs font-semibold text-[#8F6A46]">
+                  {t('priorityLabel')}: {getPriorityLabel(gift.priority)}
                 </p>
 
                 {reservation && (
@@ -234,7 +243,7 @@ export default function ListDetails() {
                         disabled={isDeleting}
                         className="rounded-full border border-[#EADDD2] px-4 py-2 text-sm font-semibold text-[#6F6258] transition hover:bg-[#FFF8F1] disabled:cursor-not-allowed disabled:opacity-60"
                       >
-                        Cancel
+                        {t('cancel')}
                       </button>
 
                       <button
@@ -243,7 +252,7 @@ export default function ListDetails() {
                         disabled={isDeleting}
                         className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
                       >
-                        {isDeleting ? 'Deleting...' : 'Confirm delete'}
+                        {isDeleting ? t('deletingGift') : t('confirmDeleteGift')}
                       </button>
                     </>
                   ) : (
@@ -252,7 +261,7 @@ export default function ListDetails() {
                       onClick={() => setConfirmingDeleteGiftId(gift.id)}
                       className="rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
                     >
-                      Delete
+                      {t('deleteGift')}
                     </button>
                   )}
                 </div>

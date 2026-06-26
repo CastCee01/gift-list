@@ -36,7 +36,7 @@ export default function Navbar() {
           to={user ? '/dashboard' : '/'}
           className="text-lg font-bold text-[#8F6A46]"
         >
-          {t('appName')}
+          Gift List
         </Link>
 
         <div className="flex items-center gap-4 text-sm font-medium text-[#2A1F1A]">
