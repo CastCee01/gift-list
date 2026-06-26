@@ -20,6 +20,7 @@ export default function ListDetails() {
   const [errorMessage, setErrorMessage] = useState('')
   const [copyMessage, setCopyMessage] = useState('')
   const [deletingGiftId, setDeletingGiftId] = useState(null)
+  const [confirmingDeleteGiftId, setConfirmingDeleteGiftId] = useState(null)
 
   useEffect(() => {
     async function loadList() {
@@ -65,10 +66,6 @@ export default function ListDetails() {
   }
 
   async function handleDeleteGift(giftId) {
-    const shouldDelete = window.confirm('Delete this gift?')
-
-    if (!shouldDelete) return
-
     try {
       setDeletingGiftId(giftId)
 
@@ -83,6 +80,8 @@ export default function ListDetails() {
           (reservation) => reservation.gift_item_id !== giftId
         )
       )
+
+      setConfirmingDeleteGiftId(null)
     } catch (error) {
       setErrorMessage(error.message || 'Could not delete gift.')
     } finally {
@@ -115,6 +114,7 @@ export default function ListDetails() {
           <p className="text-sm font-medium text-[#8F6A46]">
             {list?.purpose || t('listDetailsGiftListFallback')}
           </p>
+
           <h1 className="mt-1 text-3xl font-bold text-[#2A1F1A]">
             {list?.title}
           </h1>
@@ -142,6 +142,7 @@ export default function ListDetails() {
           <h2 className="text-xl font-semibold text-[#2A1F1A]">
             {t('noGiftsTitle')}
           </h2>
+
           <p className="mx-auto mt-2 max-w-md text-[#6F6258]">
             {t('noGiftsDescription')}
           </p>
@@ -156,6 +157,7 @@ export default function ListDetails() {
             const reservation = getReservationForGift(gift.id)
             const isReserved = gift.status === 'reserved'
             const isDeleting = deletingGiftId === gift.id
+            const isConfirmingDelete = confirmingDeleteGiftId === gift.id
 
             return (
               <article
@@ -223,15 +225,36 @@ export default function ListDetails() {
                   </div>
                 )}
 
-                <div className="mt-5 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteGift(gift.id)}
-                    disabled={isDeleting}
-                    className="rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {isDeleting ? 'Deleting...' : 'Delete'}
-                  </button>
+                <div className="mt-5 flex justify-end gap-2">
+                  {isConfirmingDelete ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setConfirmingDeleteGiftId(null)}
+                        disabled={isDeleting}
+                        className="rounded-full border border-[#EADDD2] px-4 py-2 text-sm font-semibold text-[#6F6258] transition hover:bg-[#FFF8F1] disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteGift(gift.id)}
+                        disabled={isDeleting}
+                        className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {isDeleting ? 'Deleting...' : 'Confirm delete'}
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setConfirmingDeleteGiftId(gift.id)}
+                      className="rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </article>
             )
